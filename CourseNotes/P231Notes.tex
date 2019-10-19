@@ -584,6 +584,16 @@ There are other bases that we may use for function space. A particularly nice on
 
 \subsection{Locality}
 
+Observe that $(Df)^i$ in the histogram basis samples the function at nearby points: it is sensitive to $f^{i+1}$ and $f^i$. 
+%
+The second derivative $(D^2f)^i$ is sensitive to $f^{i\pm 1}$ and $f^{i}$. 
+%
+The third derivative $(D^3f)^i$ is sensitive to $f^{i + 2}$, $f^{i\pm 1}$ and $f^{i}$. The fourth derivative $(D^4f)^i$ is sensitive to $f^{i\pm 2}$, $f^{i\pm 1}$ and $f^{i}$. And soon. The higher the derivative, the more that $(D^nf)^i$ is sensitive to values $f^j$ with $j$ far away from $i$. 
+
+This is, of course, simply the sense in which a Taylor expansion is a \emph{local} expansion. It builds up the function about a point $x_0$ by sampling the function nearby to get the slope, curvature, etc. 
+
+This notion of locality is also built into our models of physics. Special relativity tells us that causality is linked to locality. Two events that occur at some finite spacetime separation (e.g. a spacelike separation) have no well defined causality: it depends on the reference frame. Thus if we want to hold on to the idea of causal time evolution, the discretized space picture (`histogram basis‘) implies that we expect to have physical laws that do not depend on high powers of derivatives. This is why you will spend a lot of your time solving differential equations with the Laplacian and its second-order cousins, but we rarely deal with third-derivatives. 
+
 
 \subsection{Row Vectors and all that}
 
@@ -763,9 +773,469 @@ This is simply means that the function $f(\vec{w}) = g(\vec v,\vec w)$. Observe 
 Similarly, one may define an inverse metric $g^{-1}$ such that $g^{-1}g = \mathbbm{1}$. In a slight abuse of notation, the inverse metric is written with two upper indices: $g^{ij}$. Note that we do not write the `$^{-1}$.' The inverse metric will \emph{raise} the index on a lower-index object, while the metric \emph{lowers} the index of an upper-index object.\footnote{Of course: what’s really happening is that the metric has a basis $\langle i|\otimes \langle j|$ while the inverse metric has a basis $|i\rangle \otimes |j\rangle$.}
 
 
+\subsection{Orthonormality}
+
+Given a metric, we can define a sense in which our bases are \textbf{orthonormal}:
+\begin{align}
+  g\left(\vec{e}_{(i)}, \vec{e}_{(j)} \right) = \delta_{ij} \ .
+\end{align}
+We emphasize once more that there is no requirement that this is true of basis vectors. In this class, though, we will focus exclusively on this case. You may worry that curvilinear bases, like spherical coordinates, are all over the place. This is true: but these are a basis for space\footnote{This isn’t even quite true. The vectors that you deal with in `vector calculus’ are elements of tangent spaces, or more specifically, elements of the tangent bundle over a differentiable manifold. This sounds like a snobby point, but it is the underlying differential geometric structure of the calculus are doing. One is forced to confront this directly in general relativity and gauge theory.}; our primary purpose in this class are basis \emph{functions} over function space. Indeed, even if you are working with spherical harmonics, the functions themselves are orthonormal, even if spherical coordinates are not. 
+
+\subsection{A metric for function space}
+
+There is a metric for the space of functions, $\vec{f} = f(x)$ that is quite natural and familiar from quantum mechanics:
+\begin{align}
+  g(\vec f, \vec h) &= \int dx \, f^*(x) h(x) \ .
+\end{align}
+More generally, there may be a \textbf{weight} function $w(x)$ so that
+\begin{align}
+  g(\vec f, \vec h)_w &= \int dx \, w(x) f^*(x) h(x) \ .
+\end{align}
+A weight of $w(x)=x^2$ may be useful, for example, if $x$ is a radial coordinate in three-space. We haven’t specified the limits of integration, but let us emphasize that this domain (and any associated boundary conditions) are \emph{part of the definition} of the function space. $\vec{f}= f(x)$ simply does not make sense without a domain and boundary conditions. The standard in quantum mechanics are square integrable functions over real space; this is a fancy way of saying that the functions are zero at infinity.
+
+
+
+\subsection{A suggestive notation}
+
+Another nice way of writing the metric is with brackets:
+\begin{align}
+  g(\vec{v}, \vec{w}) \equiv \langle \vec{v} , \vec{w}\rangle \ .
+\end{align}
+For example, on function space we may write:
+\begin{align}
+  \langle \vec f, \vec h\rangle &= \int dx \, f^*(x) h(x) \ .
+\end{align}
+This notation looks suggestively like $\langle v | w \rangle$, except we should be clear that the inner product/metric takes two vectors and gives a number. The `bra-ket’ is just:
+\begin{enumerate}
+\item a linear function (a bra) acting on a ket or (equivalently)
+\item a linear function (a ket) acting on a bra \ .
+\end{enumerate} 
+
+
+
 \subsection{Hermitian Conjugate}
 
+The notational similarity of $\langle \vec{v} , \vec{w}\rangle$ and $\langle v | w \rangle$ is intentional.
+%
 Now that we can go between column and row vectors, thanks to the metric and its inverse, it is worth thinking a bit about what we meant by the `transpose’ operator. The transpose precisely turned a column vector $\vec{v}$ into an associated column vector $\vec{v}^T$. The generalization of this idea is the Hermitian conjugate, $^\dag$. 
+
+Given an operator $\mathcal O$, the Hermitian conjugate is $\mathcal O^\dag$ defined by
+\begin{align}
+  \langle f,\mathcal O^\dag g \rangle \equiv \langle \mathcal O f,  g \rangle \ .
+\end{align}
+A glib way of writing the Hermitian conjugate is
+\begin{align}
+  \langle \mathcal O f | = \langle f | \mathcal O^\dag \ .
+\end{align}
+This is like writing (in ordinary 3-space)
+\begin{align}
+  \vec{v}' &= A \vec v &
+  \vec v' \cdot \vec w &= \vec{v'}^T \vec{w} = \vec{v'}^T A^T \vec{W} \ .
+\end{align}
+
+
+
+
+\subsection{Hermiticity}
+
+An operator $\mathcal O$ is Hermitian if $\mathcal O = \mathcal O^\dag$. In other words,
+\begin{align}
+  \langle f, \mathcal O g\rangle = \langle O f, g \rangle \ .
+\end{align}
+
+
+For example, we may ask whether the derivative operator, $d/dx$, is Hermitian. Let‘s assume Dirichlet boundary conditions on the domain $[a,b]$ and we’re using the usual one-dimensional function space metric. One may check that
+\begin{align}
+  \left\langle f, \frac{d}{dx}g\right\rangle 
+  = 
+  \int_a^b dx \, f^*(x) \frac{d}{dx} g(x)
+  = 
+  - \int_a^b dx \, \left(\frac{d}{dx}f^*(x)\right)  g(x)
+  + \left.f^*(x)g(x)\right|^a_b
+  = -\left\langle \frac{d}{dx} f, g\right\rangle \ .
+\end{align}
+We have used the boundary conditions to make the boundary term vanish. Observe that this term would also have vanished or periodic boundary conditions.\footnote{To say this in a fancy way: periodic boundary conditions corresponds to a closed domain. The boundary of a closed domain is zero.}
+
+This explains why the momentum operator in quantum mechanics has a factor of $i$. Without it, the operator is not Hermitian and the eigenvalues (momenta) are not real. 
+
+As another example, we can look at the one-dimensional Laplacian over the same domain and with, again, Dirichlet boundary conditions. Here we have
+\begin{align}
+  \langle \mathcal O f,  g \rangle
+  &= 
+  \int_a^b \left(-\partial^2 f\right)^* g(x)
+  =
+  -\left.\left(\partial f\right)^* g\right|^a_b 
+  +\int_a^b \left(\partial f\right)^* \partial g(x)
+  =
+  \left.f^* \partial g\right|^a_b 
+  - \int_a^b \partial f^* \partial^2g(x) \ .
+\end{align}
+The right-hand side is indeed $\langle f, \mathcal O g \rangle$, so that the one-dimensional Laplacian is Hermitian on this space. Note that the boundary terms vanish for any combination of Dirichlet or Neumann boundary conditions (or periodic).
+
+\subsection{Eigenbases}
+
+Armed with an inner product, hermiticity, and eigen-stuff, let’s build up a few key results. The first result is the \textbf{orthonormality} of eigenfunctions. For a differential operator $\mathcal O$ defined over some region with some boundary conditions, the eigenfunctions $f_n$ are orthonormal:
+\begin{align}
+  \langle f_n, f_m \rangle = \delta_{mn} \ .
+\end{align}
+In terms of the usual inner product,
+\begin{align}
+  \int dx \, f_n(x)^* f_m(x) &= \delta_{mn} \ .
+  \label{eq:eigenfunction:orthonormality}
+\end{align}
+
+A slightly more nuanced idea is the \emph{completeness} of the eigenbasis. Recall that for finite dimensional spaces, the completeness relation is 
+\begin{align}
+  \mathbbm{1} = |n\rangle \langle n| \ ,
+\end{align}
+with a sum over $n$. Note that this is completely obvious in the canonical basis, but becomes a not-as-obvious statement when we remember that it is true for \emph{any} good basis. Indeed, let $|i\rangle$ and $|n\rangle$ denote two different bases; perhaps the canonical basis and some other eigenbasis, respectively. Writing this with explicit indices:
+\begin{align}
+  \delta^i_j |i\rangle\langle j| &= \sum_n |n\rangle \langle n| \ .
+\end{align}
+The function space version of this invokes the Dirac $\delta$-function:
+\begin{align}
+  \delta(x-y) &= \sum_n f_n(y)^* f_n(x) \ .
+  \label{eq:eigenfunction:completeness}
+\end{align}
+
+The results \eqref{eq:eigenfunction:orthonormality} and \eqref{eq:eigenfunction:completeness} are important and we’ll make use of them shortly. 
+
+
+
+
+
+
+
+
+\section{Introduction to Green’s Functions}
+
+The general problem we want to solve is:
+\begin{align}
+  \mathcal O \psi(x) = s(x) \ , 
+\end{align}
+for some differential operator $\mathcal{O}$. The solution is
+\begin{align}
+  \psi(x) = \mathcal O^{-1} s(x) \ .
+\end{align}
+We just have to figure out what the heck $\mathcal O^{-1}$ means. 
+
+\subsection{The analogy}
+
+Let’s proceed by analogy to finite-dimensional vector space. The analogous problem is to find $\vec{x}$ given
+\begin{align}
+   A \vec{x} = \vec{y} \ .
+\end{align}
+The solution is 
+\begin{align}
+  \vec{x} = A^{-1} \vec{y} \ .
+\end{align}
+Given a basis $|i\rangle$, the right-hand side is
+\begin{align}
+  A^{-1} \vec{y} &=
+  A^{-1} y^1 |1 \rangle +
+  A^{-1} y^2 |2 \rangle +
+  \cdots
+  \\
+  &= 
+  \left[ (A^{-1})^1_{\phantom 1 1}y^1 + (A^{-1})^1_{\phantom 1 2}y^2 + \cdots \right] |1 \rangle +
+  \left[ (A^{-1})^2_{\phantom 1 1}y^1 + (A^{-1})^2_{\phantom 1 2}y^2 + \cdots \right] |2 \rangle + \cdots 
+  \\
+  &= 
+   \left(A^{-1}\right)^i_{\phantom i j}y^j | i \rangle \ .
+\end{align}
+Here $\vec{y}$ represents a source. The sum over $j$ is a sum over the source `positions'. Conversely $i$ is the `position’ at which we are observing $\vec{x}$. After all, the full equation is:
+\begin{align}
+  x^i| i\rangle = \left(A^{-1}\right)^i_{\phantom i j}y^j | i \rangle \ . 
+\end{align}
+So $i$ is the observation point. If we project out one of the components, say by hitting both sides with a ket $\langle k|$, we have a condition on the coefficients:
+\begin{align}
+  x^k &= \left( A^{-1} \right)^k_{\phantom{k} j}y^j
+  \label{eq:x:comp:Ainv:f}
+\end{align}
+Please take a moment to appreciate the indices. The $k^\text{th}$ component of the thing we want, $x^k$, is equal to the inverse operator hitting the source. This, in turn, involves a \emph{sum over the source positions weighted by the inverse operator $A^{-1}$}. 
+
+\subsection{Indices become arguments}
+
+When passing from a finite dimensional to an infinite dimensional space, it becomes impractical to use discrete indices $i,j,k$. Instead, we pass onto continuous argument. This is what happens when we go from the `histogram basis’ of linear functions over a discretized space, $|f\rangle = f^i|i\rangle$ to actual continuous functions $|f\rangle = f(x)$. If you wanted to write this in terms of a position space basis, this would be something like
+\begin{align}
+  |f\rangle = \int dx' f(x')\delta(x-x')  = f(x)\ ,
+\end{align}
+where the $dx'$ integral takes the place of the sum over $i$ in $|f\rangle = f^i|i\rangle$. One can be poetic about this, but let’s not. This is all a little hand-wavey, mostly because $\delta(x-x')$ is not properly a function.\footnote{The Dirac $\delta$-function is a distribution and only makes sense when integrated over. It is not part of our function space. This makes it a little funny to use it as a `position space basis.’}
+
+The analog of \eqref{eq:x:comp:Ainv:f}, then, is something like
+\begin{align}
+  \psi(x) = \int dx' \,\mathcal{O}^{-1}(x,x') s(x') \ ,
+\end{align}
+where we see that there is a sum over the dummy position $x'$ in the same way that \eqref{eq:x:comp:Ainv:f} has a sum over the dummy index $j$. We’re going to call the integration kernel $\mathcal{O}^{-1}(x,x')$ the Green’s function:
+\begin{align}
+  \psi(x) \equiv \int dx' \,G(x,x') s(x') \ .
+  \label{eq:Green:basic}
+\end{align}
+
+
+
+
+
+
+
+
+\subsection{You’ve seen this before}
+\label{sec:electrostatics:analog}
+
+Let us recall electrostatics. At some point early on in your electrostatics course, you were told that a unit electric source produces an electrostatic potential that goes like $1/r$, where $r$ is the separation from the source. Up to some choice of units, we could write
+\begin{align}
+  \Phi(r) = \frac{-1}{4\pi}\frac{1}{r} \ .
+\end{align}
+This assumes that the unit source is at the origin. If the source were somewhere else, say a position $\vec{x'}$ and we were observing at position $\vec{x}$, then the potential is
+\begin{align}
+  \Phi(\vec{x}) = \frac{-1}{4\pi}\frac{1}{|\vec{x}-\vec{x'}|} \ .
+\end{align}
+Then we observe that if you had two unit charges, one at $\vec{x'}$ and the other at $\vec{x''}$, the total potential at $\vec{x}$ is simply
+\begin{align}
+  \Phi(\vec{x}) = \frac{-1}{4\pi}\frac{1}{|\vec{x}-\vec{x'}|}
+  + \frac{-1}{4\pi}\frac{1}{|\vec{x}-\vec{x''}|} \ .
+\end{align}
+That looks very \emph{linear} indeed! Later on, we learn for continuous distributions of sources, $\rho(\vec{x})$, the potential at $\vec{x}$ is
+\begin{align}
+  \Phi(\vec{x}) = \int d^3\vec{x'} \frac{-1}{4\pi}\frac{1}{|\vec{x}-\vec{x'}|} \rho(\vec{x}') \ .
+  \label{eq:phi:electrostatic:example}
+\end{align}
+This is just some kind of overlap integral. Let’s introduce a suggestive shorthand and call the overlap kernel $G(\vec{x},\vec{x'})$:
+\begin{align}
+  G(\vec{x},\vec{x'}) &= \frac{-1}{4\pi}\frac{1}{|\vec{x}-\vec{x'}|}  \ .
+\end{align}
+
+At some point in our early physics education, perhaps while learning about calculus in curvilinear coordinates, we thing are introduced to a somewhat surprising fact (at least the first time you see it): the Laplacian of $G(\vec{x},\vec{x'})$ is actually a Dirac $\delta$-function:
+\begin{align}
+  \nabla^2 G(\vec{x},\vec{x'}) = \delta^{(3)}(\vec{x}-\vec{x'}) \ .
+\end{align}
+This is pretty notable since the Laplacian features prominently in the differential equation that defines the electrostatic problem:
+\begin{align}
+  \nabla^2 \Phi(x) \sim \rho(x) \ .
+\end{align}
+Now we see that \eqref{eq:phi:electrostatic:example} is just like \eqref{eq:Green:basic}.
+
+\subsection{The Green’s Function Equation}
+
+The generic situation is a differential equation of the form
+\begin{align}
+  \mathcal O \psi(x) &= s(x) \ ,
+  \label{eq:some:differential:equation}
+\end{align}
+where $\mathcal O$ is a differential operator in the variable $x$ and is defined with some domain and boundary conditions for the function space. We also assume an appropriate metric for the physical problem. The unhelpful way of expressing the solution is
+\begin{align}
+  \psi(x) = \mathcal O^{-1} s(x) \ .
+\end{align}
+What is $\mathcal O^{-1}$? By analogy to $A^{-1}$, we may define it as
+\begin{align}
+  \mathcal O \mathcal O^{-1} = \mathbbm{1} \ ,
+\end{align}
+where we remember that the analog of $\mathbbm{1} = \delta^i_j$ in function space is $\delta(x-y)$. Indeed, by analogy to \eqref{eq:x:comp:Ainv:f}, we can write $\mathcal O^{-1}$ as a two `index’ object $G(x,x‘)$:
+\begin{align}
+ \int dx'\ , \mathcal O_x G(x,x') &= \int dx'\,\delta(x-x') \ ,
+\end{align}
+where the $dx'$ is an integral over the `dummy index,' $x'$. We wrote $\mathcal O_x$ to make it clear that the derivatives act only on the unprimed index. It’s nice to write it this way since $\delta$ functions really only formally make sense inside integrals. But let’s be glib and equate the integrands:
+\begin{align}
+  \mathcal O_x G(x,x') = \delta(x-x') \ .
+  \label{eq:Greens:function:equation}
+\end{align}
+We call this the \textbf{Green’s function equation}. 
+
+Observe that this looks just like the original equation \eqref{eq:some:differential:equation}, which we interpreted as:
+\begin{itemize}
+  \item An operator $\mathcal O_x$ encodes some dynamics.
+  \item A source, $s(x)$ of those dynamics.
+  \item A response observable $\psi(x)$ that is the result of the dynamics from the source.
+\end{itemize}
+The Green’s function equation tells us that $G(x,x')$ is the response from a `unit’ source, $\delta(x-x')$. This is precisely what we saw in Section~\ref{sec:electrostatics:analog}. 
+
+\subsection{The plan}
+
+There are three main ways to solve for Green’s functions:
+\begin{enumerate}     
+  \item Eigenfunction decomposition.
+  \item Patching.
+  \item Fourier transform.
+\end{enumerate}   
+We will go over the first two in the rest of this section. We dedicate the rest of this course to the third approach.
+
+\subsection{Green’s Functions from Eigenfunctions}
+
+At the heart of the eigenfunction approach is to notice that both the Green’s function equation \eqref{eq:Greens:function:equation} and the completeness relation \eqref{eq:eigenfunction:completeness} have $\delta$-functions. Maybe this is a way to hack together an expression for $G(x,x')$?
+
+By definition, the eigenfunctions $f_n$ of an operator $\mathcal O$ satisfy
+\begin{align}
+  \mathcal O_x f_n(x) = \lambda_n f_n(x) \ .
+\end{align}
+Let’s turn this into the Green’s function equation \eqref{eq:Greens:function:equation}. We already have the operator on the left-hand side. Let’s multiply by $f_n^*(y)$. Since this is not a function of $x$, the differential operator $\mathcal O_x$ doesn’t see it---it might as well be a constant:
+\begin{align}
+  \mathcal O_x f_n^*(y) f_n(x) = \lambda_n f_n^*(y) f_n(x) \ .
+\end{align}
+Let’s divide by the $n^\text{th}$ eigenvalue, $\lambda_n$:
+\begin{align}
+  \mathcal O_x \frac{f_n^*(y) f_n(x)}{\lambda_n} =  f_n^*(y) f_n(x) \ .
+\end{align}
+Because $\mathcal O_x$ is linear, we may sum over the eigen-stiff:
+\begin{align}
+  \mathcal O_x \sum_n \frac{f_n^*(y) f_n(x)}{\lambda_n} =   \sum_n f_n^*(y) f_n(x) \ .
+\end{align}
+But now we can go ahead and use the completeness relation \eqref{eq:eigenfunction:completeness},
+\begin{align}
+  \mathcal O_x \sum_n \frac{f_n^*(y) f_n(x)}{\lambda_n} =   \delta(x-y) \ .
+\end{align}
+Now we stop to admire our work, because this is indeed the Green’s function equation where we can identify
+\begin{align}
+  G(x,y) &= \sum_n \frac{f_n^*(y) f_n(x)}{\lambda_n} \ .
+\end{align}
+
+Let’s do an explicit example. Consider $\mathcal O = -\partial_x^2$ over $[0,1]$ with Dirichlet boundary conditions. The eigenfunctions and eigenvalues are
+\begin{align}
+  f_n(x) &= \sqrt{2} \sin(n\pi x)
+  & 
+  \lambda_n = n^2 \pi^2 \ .
+\end{align}
+The Green’s function is
+\begin{align}
+  G(x,x') &= \sum_n \frac{\sqrt{2} \sin(n\pi x) \, \sqrt{2}\sin(n\pi x')}{n^2\pi^2} \ .
+\end{align}
+Thus given some source function $s(x)$, the solution is
+\begin{align}
+  \psi(x) = \sum_n \frac{2}{n^2\pi^2} \sin(n\pi x) \int dx' \sin(n\pi x') s(x') \ .
+\end{align}
+The integral at the end is simply the $n^\text{th}$ `moment’ of the source distribution with respect to the eigenfunction. By analogy, in electrostatics you will find expressions of the form
+\begin{align}
+  \Phi(x) = \sum_{\ell, m} = \frac{1}{2\ell + 1} \frac{Y_{\ell m}(\theta, \phi)}{r^{\ell+1}} \int d^3\vec x' \, (r')^\ell Y^*_{\ell m}(\theta',\phi') \rho(x') \ .
+\end{align}
+These equations can get pretty complicated, but you can now intuit what each piece means. The spherical harmonics are eigenfunctions of the Laplacian in spherical coordinates. Inside the integral you see an overlap integral with respect to the source distribution. The values of the integral over the source end to have physical meaning, for example multipole moments of the distribution (spherical-ness). 
+
+Let’s do one more example that’s trivially related to the above example.\footnote{Matthews \& Walker 9-4.} Suppose we had a slightly different operator
+\begin{align}
+  \mathcal O = \left(\frac{d}{dx}\right)^2 + k^2 \ ,
+  \label{eq:example:operator:dx2:k2}
+\end{align}
+where we’ve added a constant term and flipped a sign. It should be obvious that the eigenfunctions are the same, while the eigenvalues are different:
+\begin{align}
+  f_n(x) &= \sqrt{2} \sin(n\pi x)
+  & 
+  \lambda_n = k^2 - n^2 \pi^2 \ .
+  \label{eq:example:d2:k2:eigenfunctions}
+\end{align}
+The eigenfunction method then gives a Green’s function:
+\begin{align}
+  G(x,x')= 2\sum_n \frac{\sin(n\pi x) \sin(n\pi x')}{k^2 - n^2\pi^2} \ .
+\end{align}
+Expressions with a $(k^2 - m^2)^{-1}$ factor will show up often.
+
+\subsection{Patching}
+
+The eigenfunction method gives the Green’s function as an infinite sum over eigenfunctions. The patching method gives the \emph{same} Green’s function but in a different representation: one that is defined piece-wise over the space. It’s simplest to jump straight in and do the previous example \eqref{eq:example:operator:dx2:k2}.
+
+First, let’s make an important observation: the Green’s function obeys the same boundary conditions as the function space. One can see this because the Green’s function is the response to a $\delta$-function source. Alternatively, we see that the solution to the differential equation (which must satisfy the boundary conditions) is made up of a `linear combination’ of Green’s functions weighted by the source. Since the source is arbitrary, the Green’s functions must obey the boundary conditions. 
+
+The patching approach to solving the Green’s function equation is to decide that the difficult part of the Green’s function equation is the $\delta$-function. Rather than dealing with it directly, we notice that away from $x=x'$, the right-hand side is zero. With this in mind, let’s define $G$ piecewise:
+\begin{align}
+  G(x,x') \equiv 
+  \begin{cases}
+  G_<(x) & \text{if $x<x'$}\\
+  G_>(x) & \text{if $x'<x$}\\
+  \end{cases} \ .
+\end{align}
+Here we imagine that we’re fixing $x'$, so we’re simply writing $G_{>.<}$ as a function of $x$. These two functions satisfy
+\begin{align}
+  \mathcal O_x G_{>,<}(x) &= 0 
+  \label{eq:patching:eg}
+\end{align}
+over their domains. In addition, we have the boundary conditions of the space. In this case, there’s a boundary at $x=0$ which affects $G_<$ and a boundary at $x=1$ which affects $G_>$:
+\begin{align}
+  G_<(0) &= 0  & G_>(1)&=0 \ .
+\end{align}
+This gives one boundary condition each for two functions that each satisfy a homogeneous second-order differential equation \eqref{eq:patching:eg}. We can thus solve for $G_{>,<}$ up to one undetermined constant each. For example:
+\begin{align}
+  G_<(x) &= a\sin(kx) & G_>(x) &= b\sin(k(x-1)) \ .
+  \label{eq:example:patching:pieces}
+\end{align}
+Note that we have sines. We have used the boundary conditions to set the arguments of the sines. You may think that this looks just like the eigenfunction expansion, but observe that the arguments of the sines are completely different from \eqref{eq:example:d2:k2:eigenfunctions}.  
+
+Now here’s the key step. We need two more boundary conditions. It is clear that those boundary conditions have to be defined at $x=x'$ where the two solutions $G_>$ and $G_<$ must be patched together. How do we discover these boundary conditions? 
+
+A moment’s thought would suggest that since we have second order differential equations, we probably want a condition on the first derivative and a condition on the [dis-]continuity of the Green‘s function itself at $x'$. How do we find a first-order differential equation? Perhaps by integrating a second-order equation! Let’s integrate the Green’s function equation \emph{over an infinitesimal sliver about $x=x’$}:
+\begin{align}
+  \int_{x'-\varepsilon}^{x'+\varepsilon}  dx\,
+  \left[
+    \left(\frac{d}{dx}\right)^2 + k^2\right] G(x,x') 
+    &=
+  \int_{x'-\varepsilon}^{x'+\varepsilon}  dx\,
+  \delta(x-x') \ .
+\end{align}
+The right-hand side is easy. The $k^2$ term vanishes as $\varepsilon\to 0$. However, something interesting happens with the second derivative term:
+\begin{align}
+   \int_{x'-\varepsilon}^{x'+\varepsilon}  dx\,
+    \left(\frac{d}{dx}\right)^2 
+    G(x,x') 
+    &=
+    \left[
+    \frac{d}{dx}G(x)
+    \right]_{x'-\varepsilon}^{x'+\varepsilon}
+    = 
+    G'_>(x') - G'_<(x') \ .
+\end{align}
+We thus arrive at
+\begin{align}
+  G'_>(x') - G'_<(x') &= 1 \ .
+\end{align}
+Plugging in the partial solutions \eqref{eq:example:patching:pieces} gives
+\begin{align}
+  kb\cos(kx'-k) - ka\cos(kx') = 1. 
+\end{align}
+The first derivative of $G$ is discontinuous across $x=x'$. By integrating one more time, one finds that the function $G$ itself should be continuous:
+\begin{align}
+  G_>(x') = G_<(x') \ .
+\end{align}
+This gives
+\begin{align}
+  a\sin(kx') = b\sin(kx'-k) \ .
+\end{align}
+
+It is now a straightforward exercise\footnote{It may help to use $\sin(\alpha-\beta) = \sin\alpha\cos\beta -\sin\beta\cos\alpha$.} to show that
+\begin{align}
+  G(x,x') &=
+  \frac{1}{k\sin k}
+  \begin{cases}
+  \sin(kx)\, \sin(k(x'-1)) & \text{if $x<x'$}\\
+  \sin(kx')\, \sin(k(x-1)) & \text{if $x'<x$}
+  \end{cases} \ .
+\end{align}
+Observe that the Green’s function is symmetric about $x\leftrightarrow x'$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
